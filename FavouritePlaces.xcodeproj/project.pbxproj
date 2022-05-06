@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		31DD6B422824F5200034772C /* MasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD6B412824F5200034772C /* MasterView.swift */; };
 		31E8CB68281B82C900D634CC /* FavouritePlacesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E8CB67281B82C900D634CC /* FavouritePlacesApp.swift */; };
 		31E8CB6A281B82C900D634CC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E8CB69281B82C900D634CC /* ContentView.swift */; };
 		31E8CB6C281B82CC00D634CC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E8CB6B281B82CC00D634CC /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		31DD6B412824F5200034772C /* MasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterView.swift; sourceTree = "<group>"; };
 		31E8CB64281B82C900D634CC /* FavouritePlaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FavouritePlaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E8CB67281B82C900D634CC /* FavouritePlacesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlacesApp.swift; sourceTree = "<group>"; };
 		31E8CB69281B82C900D634CC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -48,6 +50,8 @@
 		31E8CB83281B82CD00D634CC /* FavouritePlacesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FavouritePlacesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		31E8CB87281B82CD00D634CC /* FavouritePlacesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlacesUITests.swift; sourceTree = "<group>"; };
 		31E8CB89281B82CD00D634CC /* FavouritePlacesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlacesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		31E8CB962822265D00D634CC /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataClass.swift"; path = "CoreData/Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		31E8CB972822265D00D634CC /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataProperties.swift"; path = "CoreData/Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 		31E8CB5B281B82C900D634CC = {
 			isa = PBXGroup;
 			children = (
+				31E8CB962822265D00D634CC /* Location+CoreDataClass.swift */,
+				31E8CB972822265D00D634CC /* Location+CoreDataProperties.swift */,
 				31E8CB66281B82C900D634CC /* FavouritePlaces */,
 				31E8CB7C281B82CD00D634CC /* FavouritePlacesTests */,
 				31E8CB86281B82CD00D634CC /* FavouritePlacesUITests */,
@@ -104,6 +110,7 @@
 				31E8CB70281B82CC00D634CC /* Persistence.swift */,
 				31E8CB72281B82CC00D634CC /* FavouritePlaces.xcdatamodeld */,
 				31E8CB6D281B82CC00D634CC /* Preview Content */,
+				31DD6B412824F5200034772C /* MasterView.swift */,
 			);
 			path = FavouritePlaces;
 			sourceTree = "<group>";
@@ -266,6 +273,7 @@
 				31E8CB71281B82CC00D634CC /* Persistence.swift in Sources */,
 				31E8CB74281B82CC00D634CC /* FavouritePlaces.xcdatamodeld in Sources */,
 				31E8CB6A281B82C900D634CC /* ContentView.swift in Sources */,
+				31DD6B422824F5200034772C /* MasterView.swift in Sources */,
 				31E8CB68281B82C900D634CC /* FavouritePlacesApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
