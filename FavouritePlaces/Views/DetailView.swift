@@ -24,7 +24,7 @@ struct DetailView: View {
                 VStack{
                     Text("Enter Location Description:")
                         .bold()
-                    TextEditor(text: $location.locDesc)
+                    TextField("", text: $location.locDesc)
                 }
                 VStack {
                     HStack{
@@ -39,13 +39,9 @@ struct DetailView: View {
                     }
                 }
             } else {
-                HStack{
-                    Spacer()
-                    image.aspectRatio(contentMode: .fit)
-                    Spacer()
-                }
+                image.aspectRatio(contentMode: .fit)
                 Text(location.locDesc)
-                Text("Latitude: \(location.lat) \nLongitude: \(location.long)")
+                Text("Latitude: \(location.lat)\nLongitude: \(location.long)")
             }
         }
         .navigationTitle(location.locName)

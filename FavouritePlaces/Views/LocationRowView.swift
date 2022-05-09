@@ -19,9 +19,11 @@ struct LocationRowView: View {
                     }
                 }
         } label: {
-            image.aspectRatio(contentMode: .fit)
-                .frame(width: 32, height: 32, alignment: .center)
-            Text(location.locName)
+            HStack{
+                image.aspectRatio(contentMode: .fit)
+                    .frame(width: 32, height: 25)
+                Text(location.locName)
+            }
         }.task {
             image = await location.getImage()
         }

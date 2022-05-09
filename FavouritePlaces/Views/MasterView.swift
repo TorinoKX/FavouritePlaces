@@ -28,7 +28,7 @@ struct MasterView: View {
     private func addItem() {
         withAnimation {
             let newItem = Location(context: viewContext)
-            newItem.name = "Test"
+            newItem.name = "New Place"
             newItem.desc = ""
             
             do {
