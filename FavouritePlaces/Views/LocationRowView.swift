@@ -12,11 +12,16 @@ struct LocationRowView: View {
     @State var image = Image("Placeholder").resizable()
     var body: some View {
         NavigationLink {
-            DetailView(location: location);
+            DetailView(location: location)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                }
         } label: {
             image.aspectRatio(contentMode: .fit)
-                .frame(width: 40, height: 25, alignment: .center)
-            Text(location.name!)
+                .frame(width: 32, height: 32, alignment: .center)
+            Text(location.locName)
         }.task {
             image = await location.getImage()
         }

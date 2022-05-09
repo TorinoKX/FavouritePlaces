@@ -8,9 +8,24 @@
 import SwiftUI
 
 struct DetailView: View {
-    var location: Location;
+    @Environment(\.editMode) var editMode
+    @State var image = Image("Placeholder")
+    var location: Location
     var body: some View {
-        Text(location.name!)
+        List {
+            if editMode?.wrappedValue == .active {
+                
+            } else {
+                image.aspectRatio(contentMode: .fit)
+                    .frame(width: 32, height: 32)
+                Text(location.locDesc)
+                Text("Latitude: \(location.lat) \nLongitude: \(location.long)")
+            }
+        }
+        .navigationTitle(location.locName)
+        .task {
+            image = await location.getImage()
+        }
     }
 }
 
