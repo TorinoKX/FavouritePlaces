@@ -19,6 +19,10 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             MasterView(locations: locations)
+            //For iPads. If there's at least one location, display the detail view of the first location by default.
+            if locations.count > 0 {
+                DetailView(location: locations[0])
+            }
         }
     }
 }
