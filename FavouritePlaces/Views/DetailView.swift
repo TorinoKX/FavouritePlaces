@@ -11,31 +11,41 @@ struct DetailView: View {
     @Environment(\.editMode) var editMode
     @State var image = Image("Placeholder")
     @ObservedObject var location: Location
+    @State var lat: String = ""
+    @State var long: String = ""
     var body: some View {
         List {
             if editMode?.wrappedValue == .active {
-                TextField("Enter Name of Location", text: $location.locName)
-                TextField("Enter Image URL", text: $location.urlString)
+                TextField("Name of Location", text: $location.locName)
+                    .font(Font.largeTitle.weight(.bold))
+                TextField("Image URL", text: $location.urlString)
                     .onSubmit {
                         Task{
                             image = await location.getImage()
                         }
                     }
                 VStack{
-                    Text("Enter Location Description:")
+                    Text("Location Description:")
                         .bold()
-                    TextField("", text: $location.locDesc)
+                    TextEditor(text: $location.locDesc)
+                        .frame(height: 120, alignment: .center)
                 }
                 VStack {
                     HStack{
                         Text("Latitiude: ")
                             .bold()
-                        TextField("", text: $location.lat)
+                        TextField(location.lat, text: $lat, onCommit: {
+                            location.lat = lat
+                            lat = ""
+                        })
                     }
                     HStack{
                         Text("Longitude: ")
                             .bold()
-                        TextField("", text: $location.long)
+                        TextField(location.long, text: $long, onCommit: {
+                            location.long = long
+                            long = ""
+                        })
                     }
                 }
             } else {
@@ -44,7 +54,7 @@ struct DetailView: View {
                 Text("Latitude: \(location.lat)\nLongitude: \(location.long)")
             }
         }
-        .navigationTitle(location.locName)
+        .navigationTitle(editMode?.wrappedValue == .active ? "Edit Details" : location.locName)
         .task {
             image = await location.getImage()
         }

@@ -34,7 +34,10 @@ extension Location {
         get { String(longitude) }
         set {
             guard let long = Double(newValue) else { return }
-            longitude = long
+            if long >= -180 && long <= 180 {
+                longitude = long
+            }
+            else { return }
             save()
         }
     }
@@ -43,7 +46,10 @@ extension Location {
         get { String(latitude) }
         set {
             guard let lat = Double(newValue) else { return }
-            latitude = lat
+            if lat >= -90 && lat <= 90 {
+                latitude = lat
+            }
+            else { return }
             save()
         }
     }
