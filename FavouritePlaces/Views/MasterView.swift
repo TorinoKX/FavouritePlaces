@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    var locations: FetchedResults<Location>;
+    var locations: FetchedResults<Location>
     
     var body: some View {
         List {
