@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct DetailView: View {
     @Environment(\.editMode) var editMode
     @State var image = Image("Placeholder")
     @ObservedObject var location: Location
+    @State var region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), latitudinalMeters: 5000, longitudinalMeters: 5000)
     @State var lat: String = ""
     @State var long: String = ""
     var body: some View {
@@ -36,6 +38,7 @@ struct DetailView: View {
                             .bold()
                         TextField(location.lat, text: $lat, onCommit: {
                             location.lat = lat
+                            region.center.latitude = location.latitude
                             lat = ""
                         })
                     }
@@ -44,6 +47,7 @@ struct DetailView: View {
                             .bold()
                         TextField(location.long, text: $long, onCommit: {
                             location.long = long
+                            region.center.longitude = location.longitude
                             long = ""
                         })
                     }
@@ -52,11 +56,29 @@ struct DetailView: View {
                 image.aspectRatio(contentMode: .fit)
                 Text(location.locDesc)
                 Text("Latitude: \(location.lat)\nLongitude: \(location.long)")
+                NavigationLink {
+                    LocationMapView(region: $region)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarTrailing) {
+                                EditButton()
+                            }
+                        }
+                } label: {
+                    HStack{
+                        image.aspectRatio(contentMode: .fit)
+                            .frame(width: 32, height: 25)
+                        Text("Map of \(location.locName)")
+                    }
+                }
             }
         }
         .navigationTitle(editMode?.wrappedValue == .active ? "Edit Details" : location.locName)
         .task {
             image = await location.getImage()
+        }
+        .onAppear() {
+            region.center.latitude = location.latitude
+            region.center.longitude = location.longitude
         }
     }
 }

@@ -8,12 +8,12 @@
 import Foundation
 import CoreData
 import SwiftUI
+import CoreLocation
 
 fileprivate let defaultImage = Image("Placeholder")
 fileprivate var downloadedImages = [URL : Image]()
 
 extension Location {
-    
     var locName: String {
         get {name ?? ""}
         set {
