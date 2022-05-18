@@ -10,6 +10,10 @@ import CoreData
 import SwiftUI
 
 class LocationsService {
+    static let shared = LocationsService()
+    
+    private init() { }
+    
     func addItem(viewContext: NSManagedObjectContext) {
         let newItem = Location(context: viewContext)
         newItem.name = "New Place"

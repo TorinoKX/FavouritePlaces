@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct FavouritePlacesApp: App {
     let persistenceController = PersistenceController.shared
-    static var locationsService: LocationsService = LocationsService()
 
     var body: some Scene {
         WindowGroup {

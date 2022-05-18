@@ -25,10 +25,10 @@ struct MasterView: View {
     }
     
     func addItem() {
-        FavouritePlacesApp.locationsService.addItem(viewContext: viewContext)
+        LocationsService.shared.addItem(viewContext: viewContext)
     }
     
     func deleteItems(index: IndexSet) {
-        FavouritePlacesApp.locationsService.deleteItems(offsets: index, viewContext: viewContext, locations: locations)
+        LocationsService.shared.deleteItems(offsets: index, viewContext: viewContext, locations: locations)
     }
 }
