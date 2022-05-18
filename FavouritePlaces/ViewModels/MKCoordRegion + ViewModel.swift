@@ -1,5 +1,5 @@
 //
-//  LocationCoordViewModel.swift
+//  MKCoordRegion + ViewModel.swift
 //  FavouritePlaces
 //
 //  Created by zak on 17/5/2022.

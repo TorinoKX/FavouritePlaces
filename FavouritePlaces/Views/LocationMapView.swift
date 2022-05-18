@@ -9,18 +9,33 @@ import SwiftUI
 import MapKit
 
 struct LocationMapView: View {
-    @Binding var region: MKCoordinateRegion
-
+    @Environment(\.editMode) var editMode
+    @ObservedObject var region: MapRegionViewModel
+    @State var latitude = ""
+    @State var longitude = ""
+    
     var body: some View {
         VStack {
-            Map(coordinateRegion: $region)
-            HStack {
-                Text("Lat:")
-                TextField("Enter Latitude", text: $region.latitudeString)
+            Map(coordinateRegion: $region.region)
+            if editMode?.wrappedValue == .active {
+                HStack {
+                    Text("Lat:")
+                    TextField(region.latitude, text: $latitude, onCommit: {
+                        region.latitude = latitude
+                        latitude = ""
+                    })
+                }
+                HStack {
+                    Text("Lon:")
+                    TextField(region.longitude, text: $longitude, onCommit: {
+                        region.longitude = longitude
+                        longitude = ""
+                    })
+                }
             }
-            HStack {
-                Text("Lon:")
-                TextField("Enter Longitude", text: $region.longitudeString)
+            else {
+                Text("Lat: \(region.latitude)")
+                Text("Lon: \(region.longitude)")
             }
         }
     }
