@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    var locationsService: LocationsService = LocationsService()
     var locations: FetchedResults<Location>
     
     var body: some View {
@@ -26,10 +25,10 @@ struct MasterView: View {
     }
     
     func addItem() {
-        locationsService.addItem(viewContext: viewContext)
+        FavouritePlacesApp.locationsService.addItem(viewContext: viewContext)
     }
     
     func deleteItems(index: IndexSet) {
-        locationsService.deleteItems(offsets: index, viewContext: viewContext, locations: locations)
+        FavouritePlacesApp.locationsService.deleteItems(offsets: index, viewContext: viewContext, locations: locations)
     }
 }
