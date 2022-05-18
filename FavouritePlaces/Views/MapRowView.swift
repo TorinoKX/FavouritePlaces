@@ -13,10 +13,10 @@ struct MapRowView: View {
     @ObservedObject var location: Location
     var body: some View {
         HStack{
-        Map(coordinateRegion: $region.region)
-            .frame(width: 32, height: 25)
-            .disabled(true)
-        Text("Map of \(location.locName)")
+            Map(coordinateRegion: $region.region)
+                .frame(width: 32, height: 25)
+                .disabled(true)
+            Text("Map of \(location.locName)")
         }
     }
 }

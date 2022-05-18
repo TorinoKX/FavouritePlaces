@@ -10,13 +10,15 @@ import MapKit
 
 struct LocationMapView: View {
     @Environment(\.editMode) var editMode
-    @ObservedObject var region: MapRegionViewModel
+    @ObservedObject var location: Location
+    @ObservedObject var region: MapRegionViewModel = MapRegionViewModel()
     @State var latitude = ""
     @State var longitude = ""
     
     var body: some View {
         VStack {
             Map(coordinateRegion: $region.region)
+                .disabled(editMode?.wrappedValue == .active ? false : true)
             if editMode?.wrappedValue == .active {
                 HStack {
                     Text("Lat:")
@@ -37,6 +39,14 @@ struct LocationMapView: View {
                 Text("Lat: \(region.latitude)")
                 Text("Lon: \(region.longitude)")
             }
+        }
+        .onAppear() {
+            region.latitude = location.lat
+            region.longitude = location.long
+        }
+        .onDisappear() {
+            location.lat = region.latitude
+            location.long = region.longitude
         }
     }
 }
