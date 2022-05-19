@@ -11,18 +11,26 @@ import CoreData
 extension Locations {
     var nameString: String {
         get { name ?? "" }
-        set { name = newValue }
+        set {
+            name = newValue
+            save()
+        }
+        
     }
     var locationsArray: Array<Location> {
         get { location?.array as? [Location] ?? [] }
-        set { location = NSOrderedSet(array: newValue) }
+        set {
+            location = NSOrderedSet(array: newValue)
+            save()
+        }
     }
     
     func addNewLocation(_ viewContext: NSManagedObjectContext) {
         let newLocation = Location(context: managedObjectContext ?? viewContext)
         newLocation.locName = "New Place"
+        newLocation.locDesc = ""
         newLocation.locations = self
-        try? viewContext.save()
+        save()
     }
     
     func initLocations(_ viewContext: NSManagedObjectContext) {
@@ -53,6 +61,17 @@ extension Locations {
         locationsArray[2].longitude = 135.7270544
         locationsArray[2].locations = self
         
-        try? viewContext.save()
+        save()
+    }
+
+    @discardableResult
+    func save() -> Bool {
+        do {
+            try managedObjectContext?.save()
+        } catch {
+            print("Error saving: \(error)")
+            return false
+        }
+        return true
     }
 }

@@ -9,9 +9,14 @@ import SwiftUI
 
 struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.editMode) var editMode
     @ObservedObject var locations: Locations
     
     var body: some View {
+        if editMode?.wrappedValue == .active {
+            TextField("List Title", text: $locations.nameString)
+                .font(Font.largeTitle.weight(.bold))
+        }
         List {
             ForEach(locations.locationsArray) { location in
                 LocationRowView(location: location)
@@ -23,7 +28,7 @@ struct MasterView: View {
         .navigationBarItems(leading: Button(action: addItem) {
             Label("Add Item", systemImage: "plus")
         }, trailing: EditButton())
-        .navigationTitle(locations.nameString)
+        .navigationTitle(editMode?.wrappedValue == .active ? "" : locations.nameString)
     }
     
     func addItem() {
