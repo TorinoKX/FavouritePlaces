@@ -6,8 +6,14 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
+        <relationship name="locations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Locations" inverseName="location" inverseEntity="Locations"/>
+    </entity>
+    <entity name="Locations" representedClassName="Locations" syncable="YES" codeGenerationType="class">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="location" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="locations" inverseEntity="Location"/>
     </entity>
     <elements>
-        <element name="Location" positionX="186.3680419921875" positionY="-66.54989624023438" width="128" height="104"/>
+        <element name="Location" positionX="-39.76470947265625" positionY="-84.62158203125" width="128" height="118"/>
+        <element name="Locations" positionX="176.8192138671875" positionY="-24.70278930664062" width="128" height="58"/>
     </elements>
 </model>

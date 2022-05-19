@@ -9,26 +9,24 @@ import SwiftUI
 
 struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    var locations: FetchedResults<Location>
+    @ObservedObject var locations: Locations
     
     var body: some View {
         List {
-            ForEach(locations) { location in
+            ForEach(locations.locationsArray) { location in
                 LocationRowView(location: location)
             }
-            .onDelete(perform: deleteItems)
+            .onDelete {
+                locations.locationsArray.remove(atOffsets: $0)
+            }
         }
         .navigationBarItems(leading: Button(action: addItem) {
             Label("Add Item", systemImage: "plus")
         }, trailing: EditButton())
-        .navigationTitle("Favourite Places")
+        .navigationTitle(locations.nameString)
     }
     
     func addItem() {
-        LocationsService.shared.addItem(viewContext: viewContext)
-    }
-    
-    func deleteItems(index: IndexSet) {
-        LocationsService.shared.deleteItems(offsets: index, viewContext: viewContext, locations: locations)
+        locations.addNewLocation(viewContext)
     }
 }

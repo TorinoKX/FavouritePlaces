@@ -14,10 +14,10 @@ class LocationsService {
     
     private init() { }
     
-    func addItem(viewContext: NSManagedObjectContext) {
-        let newItem = Location(context: viewContext)
-        newItem.name = "New Place"
-        newItem.desc = ""
+    func initLocations(viewContext: NSManagedObjectContext) {
+        let newItem = Locations(context: viewContext)
+        newItem.name = "Favourite Places"
+        newItem.initLocations(viewContext)
         
         do {
             try viewContext.save()
@@ -28,18 +28,4 @@ class LocationsService {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
-    
-    func deleteItems(offsets: IndexSet, viewContext: NSManagedObjectContext, locations: FetchedResults<Location>) {
-        offsets.map { locations[$0] }.forEach(viewContext.delete)
-        
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
-    }
-    
 }
