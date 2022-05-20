@@ -9,12 +9,12 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class LocationsService {
-    static let shared = LocationsService()
+class ListService {
+    static let shared = ListService()
     
     private init() { }
     
-    func initLocations(viewContext: NSManagedObjectContext) {
+    func initList(viewContext: NSManagedObjectContext) {
         let newItem = MasterList(context: viewContext)
         newItem.name = "Favourite Places"
         newItem.initLocations(viewContext)

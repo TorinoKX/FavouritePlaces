@@ -10,6 +10,7 @@ import SwiftUI
 struct LocationRowView: View {
     @ObservedObject var location: Location
     @State var image = Image("Placeholder").resizable()
+    
     var body: some View {
         NavigationLink {
             DetailView(location: location)

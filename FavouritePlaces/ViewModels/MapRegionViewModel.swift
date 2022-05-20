@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 
 class MapRegionViewModel: ObservableObject {
+    
     @Published var region: MKCoordinateRegion
     
     init(region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), latitudinalMeters: 5000, longitudinalMeters: 5000)){

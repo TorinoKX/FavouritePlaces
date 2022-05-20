@@ -10,28 +10,30 @@ import SwiftUI
 struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.editMode) var editMode
-    @ObservedObject var locations: MasterList
+    
+    @ObservedObject var masterList: MasterList
     
     var body: some View {
         if editMode?.wrappedValue == .active {
-            TextField("List Title", text: $locations.nameString)
+            TextField("List Title", text: $masterList.nameString)
                 .font(Font.largeTitle.weight(.bold))
         }
+        
         List {
-            ForEach(locations.locationsArray) { location in
+            ForEach(masterList.locationsArray) { location in
                 LocationRowView(location: location)
             }
             .onDelete {
-                locations.locationsArray.remove(atOffsets: $0)
+                masterList.locationsArray.remove(atOffsets: $0)
             }
         }
         .navigationBarItems(leading: Button(action: addItem) {
             Label("Add Item", systemImage: "plus")
         }, trailing: EditButton())
-        .navigationTitle(editMode?.wrappedValue == .active ? "" : locations.nameString)
+        .navigationTitle(editMode?.wrappedValue == .active ? "" : masterList.nameString)
     }
     
     func addItem() {
-        locations.addNewLocation(viewContext)
+        masterList.addNewLocation(viewContext)
     }
 }

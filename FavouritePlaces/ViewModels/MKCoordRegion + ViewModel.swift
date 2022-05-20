@@ -9,6 +9,7 @@ import Foundation
 import MapKit
 
 extension MKCoordinateRegion {
+    
     var latitudeString: String {
         get { "\(center.latitude)" }
         set {
@@ -16,6 +17,7 @@ extension MKCoordinateRegion {
             center.latitude = degrees
         }
     }
+    
     var longitudeString: String {
         get { "\(center.longitude)" }
         set {

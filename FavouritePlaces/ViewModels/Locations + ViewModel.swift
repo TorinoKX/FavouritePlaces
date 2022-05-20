@@ -9,14 +9,15 @@ import Foundation
 import CoreData
 
 extension MasterList {
+    
     var nameString: String {
         get { name ?? "" }
         set {
             name = newValue
             save()
         }
-        
     }
+    
     var locationsArray: Array<Location> {
         get { locations?.array as? [Location] ?? [] }
         set {
@@ -63,7 +64,7 @@ extension MasterList {
         
         save()
     }
-
+    
     @discardableResult
     func save() -> Bool {
         do {

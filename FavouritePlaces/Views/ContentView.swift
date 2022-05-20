@@ -18,17 +18,19 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
+            //Checks if the app has been launched previously
             if locations.count > 0 {
-                MasterView(locations: locations[0])
+                MasterView(masterList: locations[0])
                 //For iPads. If there's at least one location, display the detail view of the first location by default.
                 if locations[0].locationsArray.count > 0 {
                     DetailView(location: locations[0].locationsArray[0])
                 }
             }
             else {
+                //Filler component to use the .onAppear functionality
                 Text("Initliazing values")
                     .onAppear() {
-                        LocationsService.shared.initLocations(viewContext: viewContext)
+                        ListService.shared.initList(viewContext: viewContext)
                     }
             }
         }
