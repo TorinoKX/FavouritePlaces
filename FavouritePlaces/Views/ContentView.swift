@@ -12,9 +12,9 @@ struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Locations.name, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \MasterList.name, ascending: true)],
         animation: .default)
-    var locations: FetchedResults<Locations>
+    var locations: FetchedResults<MasterList>
     
     var body: some View {
         NavigationView {

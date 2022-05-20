@@ -15,7 +15,7 @@ class LocationsService {
     private init() { }
     
     func initLocations(viewContext: NSManagedObjectContext) {
-        let newItem = Locations(context: viewContext)
+        let newItem = MasterList(context: viewContext)
         newItem.name = "Favourite Places"
         newItem.initLocations(viewContext)
         

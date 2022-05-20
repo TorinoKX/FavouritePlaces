@@ -10,7 +10,7 @@ import SwiftUI
 struct MasterView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.editMode) var editMode
-    @ObservedObject var locations: Locations
+    @ObservedObject var locations: MasterList
     
     var body: some View {
         if editMode?.wrappedValue == .active {

@@ -6,14 +6,14 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="locations" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Locations" inverseName="location" inverseEntity="Locations"/>
+        <relationship name="masterList" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MasterList" inverseName="locations" inverseEntity="MasterList"/>
     </entity>
-    <entity name="Locations" representedClassName="Locations" syncable="YES" codeGenerationType="class">
+    <entity name="MasterList" representedClassName="MasterList" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="location" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="locations" inverseEntity="Location"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="masterList" inverseEntity="Location"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-39.76470947265625" positionY="-84.62158203125" width="128" height="118"/>
-        <element name="Locations" positionX="176.8192138671875" positionY="-24.70278930664062" width="128" height="58"/>
+        <element name="Location" positionX="-39.76470947265625" positionY="-84.62158203125" width="128" height="133"/>
+        <element name="MasterList" positionX="176.8192138671875" positionY="-24.70278930664062" width="128" height="73"/>
     </elements>
 </model>
