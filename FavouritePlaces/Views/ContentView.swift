@@ -14,16 +14,16 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \MasterList.name, ascending: true)],
         animation: .default)
-    var locations: FetchedResults<MasterList>
+    var masterList: FetchedResults<MasterList>
     
     var body: some View {
         NavigationView {
             //Checks if the app has been launched previously
-            if locations.count > 0 {
-                MasterView(masterList: locations[0])
+            if masterList.count > 0 {
+                MasterView(masterList: masterList[0])
                 //For iPads. If there's at least one location, display the detail view of the first location by default.
-                if locations[0].locationsArray.count > 0 {
-                    DetailView(location: locations[0].locationsArray[0])
+                if masterList[0].locationsArray.count > 0 {
+                    DetailView(location: masterList[0].locationsArray[0])
                 }
             }
             else {
