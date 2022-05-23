@@ -26,6 +26,16 @@ extension MasterList {
         }
     }
     
+    /**
+     A function for adding a new location to the masterList.
+     
+     Creates a new location in the current viewContext (or the one supplied if it's unable to find it). Gives it some default values and adds it to the current masterList. Then saves the state.
+     
+     - Parameters:
+        - viewContext: The viewContext to be saved to
+     
+     - Returns: Nothing
+     */
     func addNewLocation(_ viewContext: NSManagedObjectContext) {
         let newLocation = Location(context: managedObjectContext ?? viewContext)
         newLocation.locName = "New Place"
@@ -34,6 +44,16 @@ extension MasterList {
         save()
     }
     
+    /**
+     A function to initialise the masterList with three default locations.
+     
+     Creates three locations with preset values, adds them to the masterList and saves the context.
+     
+     - Parameters:
+        - viewContext: The viewContext to be saved to
+     
+     - Returns: Nothing
+     */
     func initLocations(_ viewContext: NSManagedObjectContext) {
         let locationsArray = [
             Location(context: managedObjectContext ?? viewContext),
@@ -65,6 +85,11 @@ extension MasterList {
         save()
     }
     
+    /**
+     A function to save the location's state to the current viewContext.
+     
+     - Returns: a boolean variable on if it has successfully saved or not
+     */
     @discardableResult
     func save() -> Bool {
         do {

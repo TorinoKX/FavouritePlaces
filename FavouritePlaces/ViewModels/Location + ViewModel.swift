@@ -150,6 +150,13 @@ extension Location {
         }
     }
     
+    /**
+     A function to look up the name of the location's coordinates using CoreLocation's reverse geocoder. Will print console messages if it cannot find a name for whatever reason.
+     
+     Sets the location's locName variable to the **formatted** returned value. Searches for the coordinates using the location's cLocation variable.
+     
+     - Returns: Nothing
+     */
     func lookupName() {
         let coder = CLGeocoder()
         coder.reverseGeocodeLocation(self.cLocation) { optionalPlacemarks, optionalError in
@@ -180,6 +187,16 @@ extension Location {
         }
     }
     
+    /**
+     A function to format a given CLPlacemark variable to a readable string value.
+     
+     Converts to name of the location **OR** name of the suburb of the location **OR** some combination of the locatlity, thoroughfare, and subthoroughfare **OR** state depending on what is given in the placemark.
+     
+     - Parameters:
+        - placemark: A CLPlacemark variable to be converted to a name/Suburb/Address String
+     
+     - Returns: A string value of the converted placemark value. Otherwise if it cannot convert the value it will return the location's current name.
+     */
     func formatLocName(placemark: CLPlacemark) -> String {
         if let name = placemark.name {
             return name
@@ -200,6 +217,13 @@ extension Location {
         return self.locName
     }
     
+    /**
+     A function to look up the location's sunrise and sunset times for today using the sunrise-sunset.org api.
+     
+     Will print error messages to the console if it cannot look up the sunrise and sunset for whatever reason. This function will also convert the returned values to the SunriseSunset format. Stores the converted value in the location's sunriseSunset variable
+     
+     - Returns: Nothing
+     */
     func lookupSunriseAndSunset() {
         let urlString = "https://api.sunrise-sunset.org/json?lat=\(latitudeString)&lng=\(longitudeString)"
         guard let url = URL(string: urlString) else {
@@ -232,6 +256,11 @@ extension Location {
         sunriseSunset = converted
     }
     
+    /**
+     A function to save the location's state to the current viewContext.
+     
+     - Returns: a boolean variable on if it has successfully saved or not
+     */
     @discardableResult
     func save() -> Bool {
         do {

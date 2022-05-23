@@ -27,13 +27,11 @@ struct MasterView: View {
                 masterList.locationsArray.remove(atOffsets: $0)
             }
         }
-        .navigationBarItems(leading: Button(action: addItem) {
+        .navigationBarItems(leading: Button(action: {
+            masterList.addNewLocation(viewContext)
+        }) {
             Label("Add Item", systemImage: "plus")
         }, trailing: EditButton())
         .navigationTitle(editMode?.wrappedValue == .active ? "" : masterList.nameString)
-    }
-    
-    func addItem() {
-        masterList.addNewLocation(viewContext)
     }
 }
