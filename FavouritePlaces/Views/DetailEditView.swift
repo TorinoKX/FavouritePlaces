@@ -32,16 +32,16 @@ struct DetailEditView: View {
             HStack{
                 Text("Latitiude: ")
                     .bold()
-                TextField(location.lat, text: $lat, onCommit: {
-                    location.lat = lat
+                TextField(location.latitudeString, text: $lat, onCommit: {
+                    location.latitudeString = lat
                     lat = ""
                 })
             }
             HStack{
                 Text("Longitude: ")
                     .bold()
-                TextField(location.long, text: $long, onCommit: {
-                    location.long = long
+                TextField(location.longitudeString, text: $long, onCommit: {
+                    location.longitudeString = long
                     long = ""
                 })
             }

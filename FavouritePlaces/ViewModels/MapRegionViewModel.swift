@@ -12,8 +12,8 @@ class MapRegionViewModel: ObservableObject {
     
     @Published var region: MKCoordinateRegion
     
-    init(region: MKCoordinateRegion = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0), latitudinalMeters: 5000, longitudinalMeters: 5000)){
-        self.region = region
+    init(lat: Double, long: Double) {
+        self.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), latitudinalMeters: 5000, longitudinalMeters: 5000)
     }
     
     var latitude: String {

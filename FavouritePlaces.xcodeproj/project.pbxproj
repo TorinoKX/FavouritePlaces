@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3129254428379A7C00CF7876 /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3129254328379A7C00CF7876 /* DetailEditView.swift */; };
+		31292548283B2AD000CF7876 /* SunriseSunset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31292547283B2AD000CF7876 /* SunriseSunset.swift */; };
 		31DD6B422824F5200034772C /* MasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD6B412824F5200034772C /* MasterView.swift */; };
 		31DD6B452824F73E0034772C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD6B442824F73E0034772C /* DetailView.swift */; };
 		31DD6B48282515E50034772C /* Location + ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DD6B47282515E50034772C /* Location + ViewModel.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		3129254328379A7C00CF7876 /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
+		31292547283B2AD000CF7876 /* SunriseSunset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunriseSunset.swift; sourceTree = "<group>"; };
 		31DD6B412824F5200034772C /* MasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterView.swift; sourceTree = "<group>"; };
 		31DD6B442824F73E0034772C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		31DD6B47282515E50034772C /* Location + ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Location + ViewModel.swift"; sourceTree = "<group>"; };
@@ -122,8 +124,9 @@
 			children = (
 				31DD6B47282515E50034772C /* Location + ViewModel.swift */,
 				31DD6B9C28335A9B0034772C /* MKCoordRegion + ViewModel.swift */,
-				31DD6BA12833B3780034772C /* MapRegionViewModel.swift */,
 				31DD6BB22835DA290034772C /* MasterList + ViewModel.swift */,
+				31DD6BA12833B3780034772C /* MapRegionViewModel.swift */,
+				31292547283B2AD000CF7876 /* SunriseSunset.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				31DD6BB32835DA290034772C /* MasterList + ViewModel.swift in Sources */,
 				31DD6B452824F73E0034772C /* DetailView.swift in Sources */,
 				31E8CB74281B82CC00D634CC /* FavouritePlaces.xcdatamodeld in Sources */,
+				31292548283B2AD000CF7876 /* SunriseSunset.swift in Sources */,
 				31DD6B9D28335A9B0034772C /* MKCoordRegion + ViewModel.swift in Sources */,
 				31E8CB6A281B82C900D634CC /* ContentView.swift in Sources */,
 				31DD6B8F2827F37C0034772C /* LocationRowView.swift in Sources */,

@@ -23,7 +23,7 @@ struct DetailView: View {
             } else {
                 image.aspectRatio(contentMode: .fit)
                 Text(location.locDesc)
-                Text("Latitude: \(location.lat)\nLongitude: \(location.long)")
+                Text("Latitude: \(location.latitudeString)\nLongitude: \(location.longitudeString)")
                 NavigationLink {
                     LocationMapView(location: location)
                         .toolbar {
@@ -33,8 +33,8 @@ struct DetailView: View {
                         }
                         .navigationBarTitle("Map of \(location.locName)")
                 } label: {
-                    let extractedExpr: MapRegionViewModel = MapRegionViewModel(region: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), latitudinalMeters: 5000, longitudinalMeters: 5000))
-                    MapRowView(region: extractedExpr, location: location)
+                    MapRowView(region: MapRegionViewModel(lat: location.latitude, long: location.longitude),
+                               location: location)
                 }
             }
         }

@@ -9,11 +9,46 @@ import Foundation
 import CoreData
 import SwiftUI
 import CoreLocation
+import MapKit
 
 fileprivate let defaultImage = Image("Placeholder")
 fileprivate var downloadedImages = [URL : Image]()
 
 extension Location {
+    var location: CLLocation {
+        get { CLLocation(latitude: self.latitude, longitude: self.longitude) }
+        set {
+            self.latitude = newValue.coordinate.latitude
+            self.longitude = newValue.coordinate.longitude
+            save()
+        }
+    }
+    
+    var sunriseSunset: SunriseSunset {
+        get { SunriseSunset(sunrise: sunrise ?? "unknown", sunset: sunset ?? "unknown")}
+        set {
+            sunrise = newValue.sunrise
+            sunset = newValue.sunset
+            save()
+        }
+    }
+    
+    var sunriseString: String {
+        get { sunrise ?? "" }
+        set {
+            sunrise = newValue
+            save()
+        }
+    }
+    
+    var sunsetString: String {
+        get { sunset ?? "" }
+        set {
+            sunset = newValue
+            save()
+        }
+    }
+    
     var locName: String {
         get {name ?? ""}
         set {
@@ -30,7 +65,7 @@ extension Location {
         }
     }
     
-    var long: String {
+    var longitudeString: String {
         get { String(longitude) }
         set {
             guard let long = Double(newValue) else { return }
@@ -42,7 +77,7 @@ extension Location {
         }
     }
     
-    var lat: String {
+    var latitudeString: String {
         get { String(latitude) }
         set {
             guard let lat = Double(newValue) else { return }
@@ -77,6 +112,109 @@ extension Location {
             print("Error downloading \(url): \(error.localizedDescription)")
         }
         return defaultImage
+    }
+    
+    func lookupCoordinates() {
+        let coder = CLGeocoder()
+        coder.geocodeAddressString(self.locName) { optionalPlacemarks, optionalError in
+            if let error = optionalError {
+                print("Error looking up \(self.locName): \(error.localizedDescription)")
+                return
+            }
+            guard let placemarks = optionalPlacemarks, !placemarks.isEmpty else {
+                print("Placemarks came back empty")
+                return
+            }
+            let placemark = placemarks[0]
+            guard let location = placemark.location else {
+                print("Placemark has no location")
+                return
+            }
+            self.location = location
+            print("\(self.location.coordinate.latitude) \(self.location.coordinate.longitude)")
+        }
+    }
+    
+    func lookupName() {
+        let coder = CLGeocoder()
+        coder.reverseGeocodeLocation(self.location) { optionalPlacemarks, optionalError in
+            if let error = optionalError {
+                print("Error looking up \(self.location.coordinate): \(error.localizedDescription)")
+                return
+            }
+            guard let placemarks = optionalPlacemarks, !placemarks.isEmpty else {
+                print("Placemarks came back empty")
+                return
+            }
+            let placemark = placemarks[0]
+            for value in [
+                \CLPlacemark.name,
+                 \.country,
+                 \.isoCountryCode,
+                 \.postalCode,
+                 \.administrativeArea,
+                 \.subAdministrativeArea,
+                 \.locality,
+                 \.subLocality,
+                 \.thoroughfare,
+                 \.subThoroughfare
+            ] {
+                print(String(describing: placemark[keyPath: value]))
+            }
+            self.locName = self.formatLocName(placemark: placemark)
+        }
+    }
+    
+    func formatLocName(placemark: CLPlacemark) -> String {
+        if let name = placemark.name {
+            return name
+        }
+        if let local = placemark.locality {
+            if let tFare = placemark.thoroughfare {
+                if let subTFare = placemark.subThoroughfare {
+                    return "\(subTFare) \(tFare), \(local)"
+                }
+                else {
+                    return "\(tFare), \(local)"
+                }
+            }
+            else {
+                return "\(local)"
+            }
+        }
+        return self.locName
+    }
+    
+    func lookupSunriseAndSunset() {
+        let urlString = "https://api.sunrise-sunset.org/json?lat=\(latitudeString)&lng=\(longitudeString)"
+        guard let url = URL(string: urlString) else {
+            print("Malformed URL: \(urlString)")
+            return
+        }
+        guard let jsonData = try? Data(contentsOf: url) else {
+            print("Could not look up sunrise or sunset")
+            return
+        }
+        guard let api = try? JSONDecoder().decode(SunriseSunsetAPI.self, from: jsonData) else {
+            print("Could not decode JSON API:\n\(String(data: jsonData, encoding: .utf8) ?? "<empty>")")
+            return
+        }
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateStyle = .none
+        inputFormatter.timeStyle = .medium
+        inputFormatter.timeZone = .init(secondsFromGMT: 0)
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateStyle = .none
+        outputFormatter.timeStyle = .medium
+        outputFormatter.timeZone = .current
+        var converted = api.results
+        if let time = inputFormatter.date(from: api.results.sunrise) {
+            converted.sunrise = outputFormatter.string(from: time)
+        }
+        if let time = inputFormatter.date(from: api.results.sunset) {
+            converted.sunset = outputFormatter.string(from: time)
+        }
+        sunriseSunset = converted
     }
     
     @discardableResult
