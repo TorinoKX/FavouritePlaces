@@ -25,13 +25,18 @@ struct LocationMapView: View {
         VStack {
             if editMode?.wrappedValue == .active {
                 HStack {
-                    Button(action: lookupName, label: {
+                    Button(action: {
+                        location.latitudeString = region.latitude
+                        location.longitudeString = region.longitude
+                        location.lookupName()
+                    }, label: {
                         Image(systemName: "magnifyingglass.circle")
                             .padding()
                     })
                     HStack {
                         Text("Location Name:")
                         TextField(location.locName, text: $name, onCommit: {
+                            location.cLocation = CLLocation(latitude: region.region.center.latitude, longitude: region.region.center.longitude)
                             location.locName = name
                             name = ""
                         })
@@ -50,14 +55,16 @@ struct LocationMapView: View {
                         HStack {
                             Text("Lat:")
                             TextField(region.latitude, text: $latitude, onCommit: {
-                                location.latitudeString = latitude
+                                location.cLocation = CLLocation(latitude: Double(latitude) ?? region.region.center.latitude, longitude: region.region.center.longitude)
+                                region.latitude = latitude
                                 latitude = ""
                             })
                         }
                         HStack {
                             Text("Lon:")
                             TextField(region.longitude, text: $longitude, onCommit: {
-                                location.longitudeString = longitude
+                                location.cLocation = CLLocation(latitude: region.region.center.latitude, longitude: Double(longitude) ?? region.region.center.longitude)
+                                region.longitude = longitude
                                 longitude = ""
                             })
                         }
@@ -72,12 +79,7 @@ struct LocationMapView: View {
         .onDisappear() {
             location.latitudeString = region.latitude
             location.longitudeString = region.longitude
+            location.lookupSunriseAndSunset()
         }
-    }
-    
-    func lookupName() {
-        location.latitudeString = region.latitude
-        location.longitudeString = region.longitude
-        location.lookupName()
     }
 }

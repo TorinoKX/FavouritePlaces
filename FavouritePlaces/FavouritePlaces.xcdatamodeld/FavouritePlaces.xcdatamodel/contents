@@ -3,8 +3,8 @@
     <entity name="Location" representedClassName="Location" syncable="YES" codeGenerationType="class">
         <attribute name="desc" attributeType="String"/>
         <attribute name="imgURL" optional="YES" attributeType="URI"/>
-        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="latitude" attributeType="Double" defaultValueString="-27.9628397" usesScalarValueType="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="153.3814282" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="sunrise" attributeType="String" defaultValueString="unknown"/>
         <attribute name="sunset" attributeType="String" defaultValueString="unknown"/>

@@ -17,30 +17,16 @@ struct DetailView: View {
     @State var long: String = ""
     
     var body: some View {
-        List {
-            if editMode?.wrappedValue == .active {
-                DetailEditView(location: location, image: $image, lat: $lat, long: $long)
-            } else {
-                image.aspectRatio(contentMode: .fit)
-                Text(location.locDesc)
-                Text("Latitude: \(location.latitudeString)\nLongitude: \(location.longitudeString)")
-                NavigationLink {
-                    LocationMapView(location: location)
-                        .toolbar {
-                            ToolbarItem(placement: .navigationBarTrailing) {
-                                EditButton()
-                            }
-                        }
-                        .navigationBarTitle("Map of \(location.locName)")
-                } label: {
-                    MapRowView(region: MapRegionViewModel(lat: location.latitude, long: location.longitude),
-                               location: location)
+        if editMode?.wrappedValue == .active {
+            DetailEditView(location: location, image: $image, lat: $lat, long: $long)
+        } else {
+            DetailItemsView(location: location, image: $image)
+                .onAppear() {
+                    location.lookupSunriseAndSunset()
                 }
-            }
-        }
-        .navigationTitle(editMode?.wrappedValue == .active ? "Edit Details" : location.locName)
-        .task {
-            image = await location.getImage()
+                .task {
+                    image = await location.getImage()
+                }
         }
     }
 }

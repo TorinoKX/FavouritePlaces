@@ -14,37 +14,40 @@ struct DetailEditView: View {
     @Binding var long: String
     
     var body: some View {
-        TextField("Name of Location", text: $location.locName)
-            .font(Font.largeTitle.weight(.bold))
-        TextField("Image URL", text: $location.urlString)
-            .onSubmit {
-                Task{
-                    image = await location.getImage()
+        List {
+            TextField("Name of Location", text: $location.locName)
+                .font(Font.largeTitle.weight(.bold))
+            TextField("Image URL", text: $location.urlString)
+                .onSubmit {
+                    Task{
+                        image = await location.getImage()
+                    }
+                }
+            VStack{
+                Text("Location Description:")
+                    .bold()
+                TextEditor(text: $location.locDesc)
+                    .frame(height: 120, alignment: .center)
+            }
+            VStack {
+                HStack{
+                    Text("Latitiude: ")
+                        .bold()
+                    TextField(location.latitudeString, text: $lat, onCommit: {
+                        location.latitudeString = lat
+                        lat = ""
+                    })
+                }
+                HStack{
+                    Text("Longitude: ")
+                        .bold()
+                    TextField(location.longitudeString, text: $long, onCommit: {
+                        location.longitudeString = long
+                        long = ""
+                    })
                 }
             }
-        VStack{
-            Text("Location Description:")
-                .bold()
-            TextEditor(text: $location.locDesc)
-                .frame(height: 120, alignment: .center)
         }
-        VStack {
-            HStack{
-                Text("Latitiude: ")
-                    .bold()
-                TextField(location.latitudeString, text: $lat, onCommit: {
-                    location.latitudeString = lat
-                    lat = ""
-                })
-            }
-            HStack{
-                Text("Longitude: ")
-                    .bold()
-                TextField(location.longitudeString, text: $long, onCommit: {
-                    location.longitudeString = long
-                    long = ""
-                })
-            }
-        }
+        .navigationTitle("Edit Details")
     }
 }

@@ -14,6 +14,14 @@ class ListService {
     
     private init() { }
     
+    /**
+     This function's purpose is to initialise the masterList and call its initLocations function to initialise the three default locations upon first launching the app.
+     
+     - Parameters:
+        - viewContext: The viewcontext to save the list and locations to.
+     
+     - Returns: Nothing
+     */
     func initList(viewContext: NSManagedObjectContext) {
         let newItem = MasterList(context: viewContext)
         newItem.name = "Favourite Places"

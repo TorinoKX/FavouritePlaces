@@ -15,7 +15,7 @@ fileprivate let defaultImage = Image("Placeholder")
 fileprivate var downloadedImages = [URL : Image]()
 
 extension Location {
-    var location: CLLocation {
+    var cLocation: CLLocation {
         get { CLLocation(latitude: self.latitude, longitude: self.longitude) }
         set {
             self.latitude = newValue.coordinate.latitude
@@ -98,6 +98,14 @@ extension Location {
         }
     }
     
+    
+    /**
+    An asynchronous function that will return the defaultImage if it cannot set the url variable or if it can't download the image. Otherwise it will return the image variable if it is already the downloadedImage. Otherwise it will download the image and return that.
+     
+     This function reads the url from the imgURL variable
+     
+     - Returns: An Image
+     */
     func getImage() async -> Image {
         guard let url = imgURL else { return defaultImage }
         if let image = downloadedImages[url] { return image }
@@ -114,6 +122,13 @@ extension Location {
         return defaultImage
     }
     
+    /**
+     A function to look up the coordinates of the location using CoreLocation's geocoder. Will print console messages if it cannot locate the location for whatever reason.
+     
+     Sets the location's cLocation variable to the returned value. Searches for the coordinates using the location's locName variable
+     
+     - Returns: Nothing
+     */
     func lookupCoordinates() {
         let coder = CLGeocoder()
         coder.geocodeAddressString(self.locName) { optionalPlacemarks, optionalError in
@@ -130,16 +145,16 @@ extension Location {
                 print("Placemark has no location")
                 return
             }
-            self.location = location
-            print("\(self.location.coordinate.latitude) \(self.location.coordinate.longitude)")
+            self.cLocation = location
+            print("\(self.cLocation.coordinate.latitude) \(self.cLocation.coordinate.longitude)")
         }
     }
     
     func lookupName() {
         let coder = CLGeocoder()
-        coder.reverseGeocodeLocation(self.location) { optionalPlacemarks, optionalError in
+        coder.reverseGeocodeLocation(self.cLocation) { optionalPlacemarks, optionalError in
             if let error = optionalError {
-                print("Error looking up \(self.location.coordinate): \(error.localizedDescription)")
+                print("Error looking up \(self.cLocation.coordinate): \(error.localizedDescription)")
                 return
             }
             guard let placemarks = optionalPlacemarks, !placemarks.isEmpty else {
