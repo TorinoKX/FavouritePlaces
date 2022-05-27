@@ -11,24 +11,19 @@ import MapKit
 struct LocationMapView: View {
     @Environment(\.editMode) var editMode
     @ObservedObject var location: Location
-    @ObservedObject var region: MapRegionViewModel
+    @State var region: MKCoordinateRegion = MKCoordinateRegion()
     @State var latitude = ""
     @State var longitude = ""
     @State var name = ""
-    
-    init(location: Location) {
-        self.location = location
-        self.region = MapRegionViewModel(lat: location.latitude, long: location.longitude)
-    }
     
     var body: some View {
         VStack {
             if editMode?.wrappedValue == .active {
                 HStack {
-                    Button(action: {
-                        location.latitudeString = region.latitude
-                        location.longitudeString = region.longitude
-                        location.lookupName()
+                    Button(action: { LocationService.shared.lookupName(location.cLocation) {
+                        (newName) -> Void in
+                        location.locName = newName
+                    }
                     }, label: {
                         Image(systemName: "magnifyingglass.circle")
                             .padding()
@@ -36,35 +31,38 @@ struct LocationMapView: View {
                     HStack {
                         Text("Location Name:")
                         TextField(location.locName, text: $name, onCommit: {
-                            location.cLocation = CLLocation(latitude: region.region.center.latitude, longitude: region.region.center.longitude)
                             location.locName = name
                             name = ""
                         })
                     }
                 }
             }
-            Map(coordinateRegion: $region.region)
+            Map(coordinateRegion: $region)
                 .disabled(editMode?.wrappedValue == .active ? false : true)
             if editMode?.wrappedValue == .active {
                 HStack {
-                    Button(action: location.lookupCoordinates, label: {
+                    Button(action: {
+                        LocationService.shared.lookupCoordinates(location.locName) {
+                            (newLocation) -> Void in
+                            location.cLocation = newLocation
+                            region.center = newLocation.coordinate
+                    }
+                           }, label: {
                         Image(systemName: "globe.asia.australia")
                             .padding()
                     })
                     VStack {
                         HStack {
                             Text("Lat:")
-                            TextField(region.latitude, text: $latitude, onCommit: {
-                                location.cLocation = CLLocation(latitude: Double(latitude) ?? region.region.center.latitude, longitude: region.region.center.longitude)
-                                region.latitude = latitude
+                            TextField(region.latitudeString, text: $latitude, onCommit: {
+                                region.latitudeString = latitude
                                 latitude = ""
                             })
                         }
                         HStack {
                             Text("Lon:")
-                            TextField(region.longitude, text: $longitude, onCommit: {
-                                location.cLocation = CLLocation(latitude: region.region.center.latitude, longitude: Double(longitude) ?? region.region.center.longitude)
-                                region.longitude = longitude
+                            TextField(region.longitudeString, text: $longitude, onCommit: {
+                                region.longitudeString = longitude
                                 longitude = ""
                             })
                         }
@@ -72,14 +70,18 @@ struct LocationMapView: View {
                 }
             }
             else {
-                Text("Lat: \(region.latitude)")
-                Text("Lon: \(region.longitude)")
+                Text("Lat: \(region.latitudeString)")
+                Text("Lon: \(region.longitudeString)")
             }
         }
+        .onAppear() {
+            region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), latitudinalMeters: 5000, longitudinalMeters: 5000)
+        }
         .onDisappear() {
-            location.latitudeString = region.latitude
-            location.longitudeString = region.longitude
-            location.lookupSunriseAndSunset()
+            location.latitudeString = region.latitudeString
+            location.longitudeString = region.longitudeString
+            guard let sunriseSunset = LocationService.shared.lookupSunriseAndSunset(location.latitudeString, location.longitudeString) else { return }
+            location.sunriseSunset = sunriseSunset
         }
     }
 }

@@ -22,7 +22,8 @@ struct DetailView: View {
         } else {
             DetailItemsView(location: location, image: $image)
                 .onAppear() {
-                    location.lookupSunriseAndSunset()
+                    guard let sunriseSunset = LocationService.shared.lookupSunriseAndSunset(location.latitudeString, location.longitudeString) else { return }
+                    location.sunriseSunset = sunriseSunset
                 }
                 .task {
                     image = await location.getImage()
