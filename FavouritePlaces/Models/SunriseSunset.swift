@@ -10,7 +10,7 @@ import Foundation
 /**
  A Codable struct that has a sunrise variable and a sunset variable, both are type String.
  */
-struct SunriseSunset: Codable {
+struct SunriseSunset: Codable, Equatable {
     var sunrise: String
     var sunset: String
 }
