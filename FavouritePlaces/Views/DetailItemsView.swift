@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct DetailItemsView: View {
     @ObservedObject var location: Location
@@ -25,7 +26,7 @@ struct DetailItemsView: View {
                         }
                         .navigationBarTitle("Map of \(location.locName)")
                 } label: {
-                    MapRowView(region: MapRegionViewModel(lat: location.latitude, long: location.longitude),
+                    MapRowView(region: MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), latitudinalMeters: 5000, longitudinalMeters: 5000),
                                location: location)
                 }
             }

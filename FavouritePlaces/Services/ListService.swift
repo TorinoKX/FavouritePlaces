@@ -36,6 +36,4 @@ class ListService {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
-    
-    
 }

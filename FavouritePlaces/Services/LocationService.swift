@@ -15,11 +15,15 @@ class LocationService {
     private init() { }
     
     /**
-     A function to look up the coordinates of the location using CoreLocation's geocoder. Will print console messages if it cannot locate the location for whatever reason.
+     A function to look up the coordinates (CLLocation) of a location via its name using CoreLocation's geocoder. Will print console messages if it cannot locate the location for whatever reason.
      
-     Sets the location's cLocation variable to the returned value. Searches for the coordinates using the location's locName variable
+     Will call the callback function, passing in the coordinates, if and when the coordinates are located.
      
-     - Returns: Optional CLLocation
+     - Parameters:
+        - nameString: The name of the location you are looking up the coordinates for
+        - callback: An escaping function that takes a CLLocation and returns nothing, to be run with the returned location from the geocoder
+     
+     - Returns: Nothing
      */
     func lookupCoordinates(_ nameString: String, _ callback: @escaping (CLLocation) -> Void) -> Void {
         let coder = CLGeocoder()
@@ -42,9 +46,13 @@ class LocationService {
     }
     
     /**
-     A function to look up the name of the location's coordinates using CoreLocation's reverse geocoder. Will print console messages if it cannot find a name for whatever reason.
+     A function to look up the name of a location's coordinates(CLLocation) using CoreLocation's reverse geocoder. Will print console messages if it cannot find a name for whatever reason.
      
-     Sets the location's locName variable to the **formatted** returned value. Searches for the coordinates using the location's cLocation variable.
+     Will call the callback function, passing in the formatted name, if and when a placemark is found.
+     
+     - Parameters:
+        - location: The coordinates of the location you are finding the name of
+        - callback: An escaping function that takes a Stringand returns nothing, to be run with the formatted location name returned from the reverse geocoder
      
      - Returns: Nothing
      */
@@ -86,7 +94,7 @@ class LocationService {
      - Parameters:
         - placemark: A CLPlacemark variable to be converted to a name/Suburb/Address String
      
-     - Returns: A string value of the converted placemark value. Otherwise if it cannot convert the value it will return the location's current name.
+     - Returns: A string value of the converted placemark value. Otherwise if it cannot convert the value it will return a blank string.
      */
     func formatLocName(placemark: CLPlacemark) -> String {
         if let name = placemark.name {
